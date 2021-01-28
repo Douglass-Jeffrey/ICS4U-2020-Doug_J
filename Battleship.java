@@ -3,7 +3,7 @@
 *
 * @author  Douglass Jeffrey
 * @version 1.0
-* @since   2020-12-17
+* @since   2021-01-20
 */
 
 public class Battleship extends Ships {
@@ -25,5 +25,4 @@ public class Battleship extends Ships {
     this.positionX4 = -1;
     this.positionY4 = -1;
   }
-
 }

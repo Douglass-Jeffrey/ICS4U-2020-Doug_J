@@ -22,21 +22,45 @@ public class BattleshipMain {
     // initializing user attacking bot map
     Map userToBotMap = new Map();
     
-    // create scanner object (one for int one for str)
-    Scanner strScan = new Scanner(System.in);
-    Scanner intScan = new Scanner(System.in);
-    
-    
     // Generates the ship locations of each player on their respective maps.
-    System.out.println(userToBotMap.generateMap());
-    System.out.println(botToUserMap.generateMap());
+    userToBotMap.generateMap();
+    botToUserMap.generateMap();
+    
+    // create scanner object 
+    Scanner strScan = new Scanner(System.in);
+    
+    System.out.println("Welcome to battleship!\n\nHave you ever played before? ");
+    String lowerPlayCheck = strScan.nextLine();
+    String playCheck = lowerPlayCheck.toUpperCase();
+    
+    if (!playCheck.equals("YES")) {
+      System.out.println(botToUserMap.printNavyMap());
+      System.out.println("This is your map. The locations of each ship are"
+                         + " marked by the letters of the columns and the number"
+                         + " of the rows. ");
+                         
+      System.out.println(" The light blue ship is your carrier\n The purple ship is your"
+                         + " battleship\n The blue ship is your cruiser\n The yellow ship"
+                         + " is your submarine\n The green ship is your destroyer\n");
+                         
+      System.out.println("Your job is guess on your attack map where the"
+                         + " enemies ships are in order to sink them before"
+                         + " they sink yours!\n\n\n");
+                
+      // sleep to provide user time to read outcome
+      try {
+        Thread.sleep(15000);
+      
+      } catch (InterruptedException e) {
+        System.out.println("ERROR: Unable to complete stand");
+      }
+      
+    } else {
+      System.out.println("Input recieved. Beginning game!\n\n\n");
+    }
     
     // Runs game inside of game loop that only stops when a win condition is found.
     while (true) {
-      
-      // Debugging code to print out the computers ship locations. These should be commented out.
-      //System.out.println("botnavy");
-      //System.out.println(userToBotMap.printNavyMap());
       
       //Begin user attack
       //////////////////////////////////////////////////////////////////////////
@@ -52,24 +76,22 @@ public class BattleshipMain {
       // Enter while true loop to ensure that a proper location is always given.
       while (inputSensor == false) {
         try {
-          System.out.println("On which at which letter would you like to attack: ");
+          System.out.println("At which letter would you like to attack?: ");
           String lowerletterAtX = strScan.nextLine();
           String letterAtX = lowerletterAtX.toUpperCase();
           
           //ask where you want to attack
-          System.out.println("On which numeral would you like to attack: ");
-          int attackY = intScan.nextInt();
+          System.out.println("On which numeral would you like to attack?: ");
+          String attackYStr = strScan.nextLine();
+          int attackY = Integer.parseInt(attackYStr, 10);
           
           System.out.println("You attacked: " + letterAtX + attackY);
-          
-          // changing attack y so that its within the bounds of the array
-          attackY += -1;
           
           // call parse function to determine the array coordinates of the attack
           int attackX = userToBotMap.parseLetter(letterAtX);
           
           // call userToBotMap method with parsed attack coords to check if there is a hit
-          System.out.println(userToBotMap.checkNavyMap(attackY, attackX, "Player"));
+          System.out.println(userToBotMap.checkNavyMap(attackY - 1, attackX, "Player"));
           
           // escape loop if everything goes normal and the inputs are proper
           inputSensor = true;
@@ -92,8 +114,10 @@ public class BattleshipMain {
       // bot turn
       //////////////////////////////////////////////////////////////////////////
       
+      String [][] tempBotGrid = userToBotMap.botGridTransfer();
+      
       // recieve attack coords in array form
-      int [] attackArray = botToUserMap.botAttack();
+      int [] attackArray = botToUserMap.botAttack(tempBotGrid);
       
       // Print outcome of attack
       System.out.println(botToUserMap.checkNavyMap(attackArray[0], attackArray[1], "Computer"));

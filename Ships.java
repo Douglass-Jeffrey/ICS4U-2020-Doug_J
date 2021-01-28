@@ -3,11 +3,11 @@
 *
 * @author  Douglass Jeffrey
 * @version 1.0
-* @since   2020-12-17
+* @since   2021-01-20
 */
 
 public class Ships {
-// Initializing fields
+  // Initializing fields
 
   int shipSize;
   int shipHealth;
@@ -26,13 +26,15 @@ public class Ships {
   /**
    * Sets hits on the ships and modifies their fields.
    */
-  public String setHit (int attackY, int attackX, String shipType, String userVal) {
+  public String setHit(int attackY, int attackX, String shipType, String userVal) {
     shipHealth += -1;
     shotSegments += 1;
-    String shootMessage = userVal + " hit a " + shipType + ". It has " + shipHealth + " health remaining.";
+    String shootMessage = (userVal + " hit a " + shipType + ". It has "
+                           + shipHealth + " health remaining.\n");
 
     if (shotSegments == shipSize && shipHealth == 0) {
-      shootMessage = shootMessage + "\n\n" + userVal + " sunk the " + shipType + "!";
+      shootMessage = (shootMessage + "\n\n" + userVal
+                      + " sunk the " + shipType + "!\n");
     }
 
     return (shootMessage);
@@ -41,7 +43,9 @@ public class Ships {
   /**
    * Assigns the positions of the ships at the beginning of the game.
    */
-  public String assignPosition(int yVal1, int xVal1, int yVal2, int xVal2, int yVal3, int xVal3, int yVal4, int xVal4, int yVal5, int xVal5) {
+  public String assignPosition(int yVal1, int xVal1, int yVal2, int xVal2,
+                               int yVal3, int xVal3, int yVal4, int xVal4,
+                               int yVal5, int xVal5) {
 
     positionX1 = xVal1;
     positionY1 = yVal1;

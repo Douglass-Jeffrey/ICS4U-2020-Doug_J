@@ -3,7 +3,7 @@
 *
 * @author  Douglass Jeffrey
 * @version 1.0
-* @since   2020-12-17
+* @since   2021-01-20
 */
 
 public class Cruiser extends Ships {
@@ -23,5 +23,4 @@ public class Cruiser extends Ships {
     this.positionX3 = -1;
     this.positionY3 = -1;
   }
-
 }
